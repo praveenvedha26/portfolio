@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-obsidian: #050505;
+    --accent-vermilion: #FF4522;
+    --accent-vermilion-dark: #D92B04;
+    --text-primary: #F5F5F5;
+    --text-muted: #A1A1AA;
+  }
+
+  body {
+    background-color: #050505;
+    color: #F5F5F5;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF4522;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D92B04;
+}
+
+/* Font helpers */
+.font-display {
+  font-family: 'Bebas Neue', 'Anton', sans-serif;
+}
+
+.font-anton {
+  font-family: 'Anton', 'Bebas Neue', sans-serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-serif-italic {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+}
+
+/* Text Gradients */
+.text-gradient-fiery {
+  background: linear-gradient(180deg, #FF4522 0%, #D92B04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-portfolio {
+  background: linear-gradient(180deg, #FF5533 0%, #FF3D17 35%, #9E1A00 70%, #4D0900 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-metallic {
+  background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Portrait mask gradient */
+.portrait-mask {
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 98%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 98%);
+}
+
+/* Glassmorphism helpers */
+.glass-pill {
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-pill:hover {
+  border-color: rgba(255, 69, 34, 0.35);
+}
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.7) 0%, rgba(10, 10, 10, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 69, 34, 0.4);
+}
+
+/* Ambient glow */
+.ambient-crimson-glow {
+  background: radial-gradient(circle at 50% 45%, rgba(255, 69, 34, 0.18) 0%, rgba(217, 43, 4, 0.08) 35%, transparent 70%);
+}
