@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export default function Navbar() {
@@ -33,6 +34,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'Work', href: '#work' },
+    { name: 'Education', href: '#education' },
     { name: 'Stack', href: '#stack' },
     { name: 'Contact', href: '#contact' }
   ];
@@ -47,21 +49,21 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center px-4 pt-4 md:pt-6 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center px-3 sm:px-4 pt-3 sm:pt-4 md:pt-6 pointer-events-none">
       {/* Floating Glassmorphic Pill */}
       <nav
         aria-label="Main Navigation"
-        className={`pointer-events-auto flex items-center justify-between gap-4 md:gap-8 px-4 md:px-6 py-2.5 rounded-full transition-all duration-300 ${
+        className={`pointer-events-auto flex items-center justify-between gap-3 sm:gap-4 md:gap-8 px-3.5 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full transition-all duration-300 ${
           scrolled
-            ? 'bg-[#0A0A0A]/85 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8)] shadow-[#FF4522]/5 py-2'
-            : 'bg-[#0D0D0E]/60 backdrop-blur-md border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+            ? 'bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] shadow-[#FF4522]/5 py-2'
+            : 'bg-[#0D0D0E]/75 backdrop-blur-md border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
         }`}
       >
-        {/* Monogram Icon */}
+        {/* Monogram Icon (Always Accessible on Mobile & Desktop) */}
         <a
           href="#home"
           onClick={(e) => scrollTo(e, '#home')}
-          className="flex items-center gap-2.5 group"
+          className="flex items-center gap-2 sm:gap-2.5 group shrink-0"
           aria-label="Praveen Vedanayagam Home"
         >
           <div className="w-8 h-8 rounded-full bg-gradient-to-b from-[#FF4522] to-[#D92B04] p-[1.5px] transition-transform duration-300 group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(255,69,34,0.5)]">
@@ -76,7 +78,7 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* Center Desktop Links */}
+        {/* Center Desktop Links (Hidden on mobile < md) */}
         <div className="hidden md:flex items-center gap-1 bg-[#141416]/50 p-1 rounded-full border border-white/5">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
@@ -97,8 +99,8 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right CTA & Status */}
-        <div className="flex items-center gap-3">
+        {/* Right CTA & Controls */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-white/10">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4522] opacity-75"></span>
@@ -120,59 +122,80 @@ export default function Navbar() {
             <ArrowUpRight className="w-3 h-3 text-[#FF4522]" />
           </a>
 
+          {/* "LET'S TALK" Pill - Always Fully Accessible on Both Mobile & Desktop */}
           <a
             href="#contact"
             onClick={(e) => scrollTo(e, '#contact')}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-[#FF4522]/15 hover:bg-[#FF4522] text-[#FF4522] hover:text-[#050505] border border-[#FF4522]/40 transition-all duration-200"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase bg-[#FF4522]/15 hover:bg-[#FF4522] text-[#FF4522] hover:text-[#050505] border border-[#FF4522]/40 transition-all duration-200 active:scale-95 shrink-0"
           >
             <span>Let's Talk</span>
             <ArrowUpRight className="w-3 h-3" />
           </a>
 
-          {/* Mobile menu trigger */}
+          {/* Mobile hamburger menu trigger (< md) */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-[#A1A1AA] hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
+            className="md:hidden min-w-[36px] min-h-[36px] flex items-center justify-center rounded-full text-[#A1A1AA] hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 transition-colors active:scale-95 cursor-pointer"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-[#FF4522]" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4 text-[#FF4522]" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Drawer Dropdown */}
-      {mobileMenuOpen && (
-        <div className="pointer-events-auto absolute top-20 inset-x-4 max-w-sm mx-auto p-4 rounded-2xl bg-[#0A0A0C]/95 backdrop-blur-2xl border border-white/10 shadow-2xl flex flex-col gap-2 md:hidden animate-in fade-in slide-in-from-top-3 duration-200">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => scrollTo(e, link.href)}
-              className="px-4 py-2.5 rounded-xl text-sm font-medium tracking-wider uppercase text-[#F5F5F5] hover:bg-[#FF4522]/15 hover:text-[#FF4522] transition-colors flex items-center justify-between"
-            >
-              <span>{link.name}</span>
-              <ArrowUpRight className="w-4 h-4 opacity-40" />
-            </a>
-          ))}
-          <a
-            href="/Praveen_MV_Resume.pdf"
-            download="Praveen_MV_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2.5 rounded-xl text-sm font-medium tracking-wider uppercase text-[#F5F5F5] bg-white/5 hover:bg-[#FF4522]/15 hover:text-[#FF4522] transition-colors flex items-center justify-between border border-white/5"
+      {/* Mobile Glassmorphic Drawer Dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="pointer-events-auto absolute top-16 sm:top-20 inset-x-4 max-w-sm mx-auto p-4 rounded-2xl bg-[#0A0A0C]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.9)] flex flex-col gap-1.5 md:hidden"
           >
-            <span className="flex items-center gap-2">
-              <span>Resume (PDF)</span>
-            </span>
-            <ArrowUpRight className="w-4 h-4 text-[#FF4522]" />
-          </a>
-          <div className="pt-2 mt-2 border-t border-white/10 flex items-center justify-between text-xs text-[#A1A1AA] px-2 font-mono-code">
-            <span>BASED IN CHENNAI</span>
-            <span className="text-[#FF4522]">OPEN TO FULL-TIME</span>
-          </div>
-        </div>
-      )}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => scrollTo(e, link.href)}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors flex items-center justify-between ${
+                    isActive
+                      ? 'bg-[#FF4522]/20 text-[#FF4522] border border-[#FF4522]/30'
+                      : 'text-[#F5F5F5] hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  <span>{link.name}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
+                </a>
+              );
+            })}
+
+            <div className="pt-2 border-t border-white/10 mt-1 flex flex-col gap-2">
+              <a
+                href="/Praveen_MV_Resume.pdf"
+                download="Praveen_MV_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase text-[#F5F5F5] bg-white/5 hover:bg-[#FF4522]/15 hover:text-[#FF4522] transition-colors flex items-center justify-between border border-white/5"
+              >
+                <span>Download Resume (PDF)</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#FF4522]" />
+              </a>
+
+              <div className="flex items-center justify-between text-[10px] text-[#A1A1AA] px-2 py-1 font-mono-code uppercase tracking-wider">
+                <span>Based in Chennai</span>
+                <span className="text-[#22C55E] flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
+                  Open to Roles
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
