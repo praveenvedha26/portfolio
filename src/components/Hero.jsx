@@ -105,7 +105,7 @@ export default function Hero({ onOpenContact }) {
       {/* ======================================================== */}
       <AnimatePresence>
         {showCursors && (
-          <div className="absolute inset-0 z-[45] pointer-events-none w-full">
+          <div className="absolute inset-0 z-[20] pointer-events-none max-w-7xl mx-auto">
             {floatingBadges.map((badge) => (
               <FloatingCursorBadge
                 key={badge.name}
@@ -114,7 +114,6 @@ export default function Hero({ onOpenContact }) {
                 top={badge.top}
                 left={badge.left}
                 right={badge.right}
-                bottom={badge.bottom}
                 delay={badge.delay}
                 dx={badge.dx}
                 dy={badge.dy}

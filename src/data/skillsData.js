@@ -63,20 +63,13 @@ export const skillsPillars = [
   }
 ];
 
-// Dynamic Figma-style floating multiplayer cursor badges scattered across outer edges:
-// Java and Spring Boot are given prime, prominent, unobstructed whitespace placement.
 export const floatingBadges = [
-  // Prominent Top-Left Margin (Java)
-  { name: "Java", color: "#F97316", top: "16%", left: "12%", delay: 0, dx: 12, dy: -12 },
-  
-  // Prominent Top-Right Margin (Spring Boot)
-  { name: "Spring Boot", color: "#22C55E", top: "16%", right: "12%", delay: 0.2, dx: -12, dy: 14 },
-  
-  // Dynamic Flanks surrounding central portrait & text
-  { name: "React", color: "#38BDF8", top: "28%", left: "4%", delay: 0.4, dx: 14, dy: -10 },
-  { name: "Docker", color: "#3B82F6", top: "34%", right: "6%", delay: 0.6, dx: -14, dy: -12 },
-  { name: "Python", color: "#EAB308", top: "48%", left: "5%", delay: 0.8, dx: 12, dy: 10 },
-  { name: "Node.js", color: "#10B981", top: "58%", right: "8%", delay: 1.0, dx: -10, dy: 14 },
-  { name: "C++", color: "#6366F1", top: "76%", right: "14%", delay: 1.2, dx: -12, dy: -10 },
-  { name: "Redis", color: "#EF4444", bottom: "12%", left: "8%", delay: 1.4, dx: 14, dy: 8 }
+  { name: "React", color: "#38BDF8", top: "18%", left: "14%", delay: 0, dx: 12, dy: -14 },
+  { name: "Spring Boot", color: "#22C55E", top: "28%", right: "12%", delay: 0.2, dx: -10, dy: 16 },
+  { name: "Python", color: "#EAB308", top: "42%", left: "8%", delay: 0.4, dx: 14, dy: 10 },
+  { name: "Docker", color: "#3B82F6", top: "54%", right: "10%", delay: 0.6, dx: -14, dy: -12 },
+  { name: "Node.js", color: "#10B981", top: "68%", left: "16%", delay: 0.8, dx: 10, dy: -16 },
+  { name: "C++", color: "#6366F1", top: "72%", right: "18%", delay: 1.0, dx: -12, dy: 12 },
+  { name: "Redis", color: "#EF4444", top: "84%", left: "24%", delay: 1.2, dx: 14, dy: 8 },
+  { name: "PostgreSQL", color: "#F59E0B", top: "86%", right: "26%", delay: 1.4, dx: -10, dy: -14 }
 ];
