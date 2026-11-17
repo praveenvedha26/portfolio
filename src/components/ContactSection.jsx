@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
@@ -6,12 +6,12 @@ import {
   Check,
   ExternalLink,
   Send,
-  Loader2,
   ArrowUpRight,
   AlertCircle,
   CheckCircle2,
   RotateCcw,
-  Sparkles
+  Sparkles,
+  Inbox
 } from 'lucide-react';
 
 function GithubIcon({ className = "w-5 h-5" }) {
@@ -57,34 +57,33 @@ const QUICK_TEMPLATES = [
 ];
 
 export default function ContactSection({ onShowToast }) {
-  const [copied, setCopied] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedSentText, setCopiedSentText] = useState(false);
+  const [copiedDraft, setCopiedDraft] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     subject: 'Portfolio Inquiry for Praveen Vedanayagam',
     message: ''
   });
-  const [isSending, setIsSending] = useState(false);
   const [sentSuccess, setSentSuccess] = useState(false);
   const [lastSentData, setLastSentData] = useState(null);
   const [validationError, setValidationError] = useState('');
 
-  const formRef = useRef(null);
   const email = 'mvpraveenmng@gmail.com';
 
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      setCopied(true);
+      setCopiedEmail(true);
       if (onShowToast) {
         onShowToast(`Copied ${email} to clipboard!`);
       }
-      setTimeout(() => setCopied(false), 2500);
+      setTimeout(() => setCopiedEmail(false), 2500);
     } catch {
-      setCopied(true);
+      setCopiedEmail(true);
       if (onShowToast) onShowToast(`Email: ${email}`);
-      setTimeout(() => setCopied(false), 2500);
+      setTimeout(() => setCopiedEmail(false), 2500);
     }
   };
 
@@ -100,75 +99,93 @@ export default function ContactSection({ onShowToast }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const buildEmailDraft = (state) => {
+    const subject = state.subject.trim() || `Portfolio Inquiry from ${state.name || 'Visitor'}`;
+    const body = `Hi Praveen,
+
+${state.message}
+
+—
+Sender: ${state.name}
+Email: ${state.email || 'Not specified'}
+Sent via Praveen's Portfolio Website`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+      email
+    )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    return { subject, body, gmailUrl, mailtoUrl };
+  };
+
+  const handleSendVia = (channel = 'gmail') => {
     setValidationError('');
 
     if (!formState.name.trim()) {
-      e.preventDefault();
       setValidationError('Please enter your name.');
       return;
     }
-    if (!formState.email.trim() || !formState.email.includes('@')) {
-      e.preventDefault();
-      setValidationError('Please enter a valid email address.');
-      return;
-    }
     if (!formState.message.trim()) {
-      e.preventDefault();
       setValidationError('Please enter your message.');
       return;
     }
 
-    // Notice: We do NOT call e.preventDefault() here!
-    // The browser natively dispatches the POST to target="formsubmit_hidden_iframe".
-    // Because target is a hidden iframe, the parent page will NOT reload or change origin.
-    // This completely bypasses any CORS issues, ad-blocker fetch bans, and client-side failures.
-    setIsSending(true);
+    const { subject, body, gmailUrl, mailtoUrl } = buildEmailDraft(formState);
 
-    const snapshot = { ...formState };
+    const snapshot = {
+      name: formState.name,
+      email: formState.email || 'Not specified',
+      subject,
+      message: formState.message,
+      channel,
+      gmailUrl,
+      mailtoUrl
+    };
+
     setLastSentData(snapshot);
 
-    // Also attempt background fetch to ensure multi-layer delivery
-    try {
-      fetch(`https://formsubmit.co/ajax/${email}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formState.name,
-          email: formState.email,
-          _subject: formState.subject || `New Portfolio Message from ${formState.name}`,
-          message: formState.message,
-          _captcha: 'false',
-          _template: 'table'
-        })
-      }).catch(() => {
-        // Non-blocking fallback: native iframe POST is already dispatched
-      });
-    } catch {
-      // Ignored
+    if (channel === 'gmail') {
+      const opened = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+      if (!opened) {
+        // In case strict popup blocker caught it, trigger mailto fallback
+        window.location.href = mailtoUrl;
+      }
+      if (onShowToast) {
+        onShowToast('Gmail compose opened — ready to send to Praveen!');
+      }
+    } else {
+      window.location.href = mailtoUrl;
+      if (onShowToast) {
+        onShowToast('Mail client launched — ready to send to Praveen!');
+      }
     }
 
-    setTimeout(() => {
-      setIsSending(false);
-      setSentSuccess(true);
-      setFormState({
-        name: '',
-        email: '',
-        subject: 'Portfolio Inquiry for Praveen Vedanayagam',
-        message: ''
-      });
-      if (onShowToast) {
-        onShowToast(`Message dispatched to Praveen (${email})!`);
-      }
-    }, 800);
+    setSentSuccess(true);
+  };
+
+  const handleCopyFullDraft = async () => {
+    if (!formState.name.trim() || !formState.message.trim()) {
+      setValidationError('Please fill in your name and message before copying.');
+      return;
+    }
+    const { body } = buildEmailDraft(formState);
+    try {
+      await navigator.clipboard.writeText(body);
+      setCopiedDraft(true);
+      if (onShowToast) onShowToast('Full email message copied to clipboard!');
+      setTimeout(() => setCopiedDraft(false), 2500);
+    } catch {
+      setCopiedDraft(true);
+      setTimeout(() => setCopiedDraft(false), 2500);
+    }
   };
 
   const handleCopySentMessage = async () => {
     if (!lastSentData) return;
-    const text = `From: ${lastSentData.name} (${lastSentData.email})\nSubject: ${lastSentData.subject}\n\n${lastSentData.message}`;
+    const text = `To: ${email}\nSubject: ${lastSentData.subject}\n\n${lastSentData.message}\n\n— ${lastSentData.name} (${lastSentData.email})`;
     try {
       await navigator.clipboard.writeText(text);
       setCopiedSentText(true);
@@ -183,39 +200,14 @@ export default function ContactSection({ onShowToast }) {
   const handleResetForm = () => {
     setSentSuccess(false);
     setValidationError('');
-    setFormState({
-      name: '',
-      email: '',
-      subject: 'Portfolio Inquiry for Praveen Vedanayagam',
-      message: ''
-    });
   };
 
-  // Build current Gmail compose link
-  const currentSubject = formState.subject || 'Portfolio Inquiry for Praveen Vedanayagam';
-  const currentBody = formState.message
-    ? `${formState.message}\n\n— ${formState.name || 'Visitor'} (${formState.email || 'Email not provided'})`
-    : `Hi Praveen,\n\nI'm reaching out after viewing your portfolio.`;
-
-  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+  // Direct quick mail URLs for left sidebar
+  const quickGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
     email
-  )}&su=${encodeURIComponent(currentSubject)}&body=${encodeURIComponent(currentBody)}`;
+  )}&su=Portfolio%20Inquiry%20for%20Praveen%20Vedanayagam`;
 
-  const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(
-    currentSubject
-  )}&body=${encodeURIComponent(currentBody)}`;
-
-  // Last sent links for success screen
-  const lastSentSubject = lastSentData?.subject || 'Portfolio Inquiry for Praveen Vedanayagam';
-  const lastSentBody = lastSentData
-    ? `${lastSentData.message}\n\n— ${lastSentData.name} (${lastSentData.email})`
-    : '';
-  const lastSentGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-    email
-  )}&su=${encodeURIComponent(lastSentSubject)}&body=${encodeURIComponent(lastSentBody)}`;
-  const lastSentMailtoUrl = `mailto:${email}?subject=${encodeURIComponent(
-    lastSentSubject
-  )}&body=${encodeURIComponent(lastSentBody)}`;
+  const quickMailtoUrl = `mailto:${email}?subject=Portfolio%20Inquiry%20for%20Praveen%20Vedanayagam`;
 
   const socialLinks = [
     {
@@ -243,16 +235,6 @@ export default function ContactSection({ onShowToast }) {
 
   return (
     <section id="contact" className="relative py-24 sm:py-32 bg-[#050505] overflow-hidden">
-      {/* Hidden iframe that receives the native FormSubmit POST without page reload or CORS errors */}
-      <iframe
-        name="formsubmit_hidden_iframe"
-        id="formsubmit_hidden_iframe"
-        title="formsubmit_hidden_iframe"
-        className="hidden"
-        style={{ display: 'none' }}
-        aria-hidden="true"
-      />
-
       {/* Ambient background glow */}
       <div
         className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#FF4522]/8 blur-[180px] rounded-full"
@@ -315,7 +297,7 @@ export default function ContactSection({ onShowToast }) {
                   className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FF4522]/15 hover:bg-[#FF4522] text-[#FF4522] hover:text-[#050505] font-mono-code text-xs font-bold transition-all duration-200 active:scale-95 shrink-0 cursor-pointer"
                   aria-label="Copy email address"
                 >
-                  {copied ? (
+                  {copiedEmail ? (
                     <>
                       <Check className="w-3.5 h-3.5" />
                       <span>COPIED</span>
@@ -332,21 +314,21 @@ export default function ContactSection({ onShowToast }) {
               {/* Direct Webmail Links */}
               <div className="mt-4 pt-3 border-t border-white/5 flex items-center gap-3">
                 <a
-                  href={gmailComposeUrl}
+                  href={quickGmailUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#A1A1AA] hover:text-white transition-colors"
                 >
                   <Mail className="w-3.5 h-3.5 text-[#EA4335]" />
-                  <span>Open Gmail</span>
+                  <span>Open in Gmail</span>
                   <ArrowUpRight className="w-3 h-3 opacity-60" />
                 </a>
                 <span className="text-white/20">•</span>
                 <a
-                  href={mailtoUrl}
+                  href={quickMailtoUrl}
                   className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#A1A1AA] hover:text-white transition-colors"
                 >
-                  <span>Mail App</span>
+                  <span>System Mail App</span>
                   <ArrowUpRight className="w-3 h-3 opacity-60" />
                 </a>
               </div>
@@ -385,19 +367,19 @@ export default function ContactSection({ onShowToast }) {
             </div>
           </div>
 
-          {/* RIGHT: High Reliability Contact Form */}
+          {/* RIGHT: High Reliability Direct Dispatch Form */}
           <div className="lg:col-span-7">
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0A0A0D] border border-white/10 shadow-2xl relative">
               
               <AnimatePresence mode="wait">
-                {sentSuccess ? (
-                  /* SUCCESS STATE VIEW */
+                {sentSuccess && lastSentData ? (
+                  /* SUCCESS CONFIRMATION VIEW */
                   <motion.div
                     key="success-card"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="space-y-6 py-4"
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    className="space-y-5 py-2"
                   >
                     <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#22C55E]/10 border border-[#22C55E]/30">
                       <div className="p-3 rounded-full bg-[#22C55E]/20 text-[#22C55E] shrink-0 mt-0.5">
@@ -405,45 +387,55 @@ export default function ContactSection({ onShowToast }) {
                       </div>
                       <div className="space-y-1">
                         <h4 className="font-anton text-2xl text-white tracking-wide">
-                          MESSAGE DISPATCHED!
+                          EMAIL DRAFT LAUNCHED!
                         </h4>
                         <p className="text-xs sm:text-sm font-mono-code text-[#4ADE80]">
-                          Delivered directly to Praveen at <span className="font-bold underline">{email}</span>.
+                          Pre-filled & addressed directly to <span className="font-bold underline">{email}</span>.
                         </p>
-                        <p className="text-xs text-[#A1A1AA] pt-1">
-                          Thank you for reaching out. Praveen typically replies within 24 hours.
+                        <p className="text-xs text-[#D4D4D8] pt-1 leading-relaxed">
+                          Your email client has been launched with your drafted message. Simply hit <strong>"Send"</strong> in your mail window to complete delivery!
                         </p>
                       </div>
                     </div>
 
                     {/* Sent Message Recap */}
-                    {lastSentData && (
-                      <div className="p-4 rounded-xl bg-[#121217] border border-white/8 space-y-2.5">
-                        <div className="flex items-center justify-between text-xs font-mono-code text-[#A1A1AA] border-b border-white/5 pb-2">
-                          <span>SUMMARY OF DISPATCH</span>
-                          <span className="text-[#22C55E]">✓ SENT</span>
-                        </div>
-                        <div className="text-xs font-mono-code space-y-1">
-                          <p><span className="text-[#71717A]">From:</span> <span className="text-white">{lastSentData.name}</span> &lt;{lastSentData.email}&gt;</p>
-                          <p><span className="text-[#71717A]">Subject:</span> <span className="text-white">{lastSentData.subject}</span></p>
-                        </div>
-                        <div className="text-xs text-[#D4D4D8] bg-[#0A0A0D] p-3 rounded border border-white/5 whitespace-pre-wrap font-sans max-h-36 overflow-y-auto">
-                          {lastSentData.message}
-                        </div>
+                    <div className="p-4 rounded-xl bg-[#121217] border border-white/8 space-y-2.5">
+                      <div className="flex items-center justify-between text-xs font-mono-code text-[#A1A1AA] border-b border-white/5 pb-2">
+                        <span className="flex items-center gap-1.5">
+                          <Inbox className="w-3.5 h-3.5 text-[#FF4522]" />
+                          PREPARED DISPATCH
+                        </span>
+                        <span className="text-[#22C55E]">✓ READY TO DELIVER</span>
                       </div>
-                    )}
+                      <div className="text-xs font-mono-code space-y-1">
+                        <p><span className="text-[#71717A]">To:</span> <span className="text-white font-semibold">{email}</span></p>
+                        <p><span className="text-[#71717A]">From:</span> <span className="text-white">{lastSentData.name}</span> &lt;{lastSentData.email}&gt;</p>
+                        <p><span className="text-[#71717A]">Subject:</span> <span className="text-white">{lastSentData.subject}</span></p>
+                      </div>
+                      <div className="text-xs text-[#D4D4D8] bg-[#0A0A0D] p-3 rounded border border-white/5 whitespace-pre-wrap font-sans max-h-36 overflow-y-auto">
+                        {lastSentData.message}
+                      </div>
+                    </div>
 
                     {/* Action buttons */}
                     <div className="flex flex-wrap items-center gap-3 pt-2">
                       <a
-                        href={lastSentGmailUrl}
+                        href={lastSentData.gmailUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/15 text-white font-mono-code text-xs font-semibold transition-all hover:scale-[1.02] cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#FF4522] text-[#050505] font-mono-code text-xs font-bold transition-all hover:brightness-110 shadow-[0_0_20px_rgba(255,69,34,0.3)] cursor-pointer"
                       >
-                        <Mail className="w-4 h-4 text-[#EA4335]" />
-                        <span>Also open in Gmail Web</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
+                        <Mail className="w-4 h-4 text-[#050505]" />
+                        <span>Re-open in Gmail Web</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+
+                      <a
+                        href={lastSentData.mailtoUrl}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/15 text-white font-mono-code text-xs font-semibold transition-colors cursor-pointer"
+                      >
+                        <Send className="w-3.5 h-3.5 text-[#38BDF8]" />
+                        <span>System Mail Client</span>
                       </a>
 
                       <button
@@ -459,7 +451,7 @@ export default function ContactSection({ onShowToast }) {
                         ) : (
                           <>
                             <Copy className="w-3.5 h-3.5" />
-                            <span>COPY SUMMARY</span>
+                            <span>COPY MESSAGE</span>
                           </>
                         )}
                       </button>
@@ -467,15 +459,15 @@ export default function ContactSection({ onShowToast }) {
                       <button
                         type="button"
                         onClick={handleResetForm}
-                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#FF4522]/20 hover:bg-[#FF4522]/30 text-[#FF4522] font-mono-code text-xs font-bold transition-colors ml-auto cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-[#FF4522] font-mono-code text-xs font-bold transition-colors ml-auto cursor-pointer"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
-                        <span>SEND ANOTHER</span>
+                        <span>EDIT MESSAGE</span>
                       </button>
                     </div>
                   </motion.div>
                 ) : (
-                  /* FORM VIEW */
+                  /* COMPOSE FORM VIEW */
                   <motion.div
                     key="contact-form"
                     initial={{ opacity: 0 }}
@@ -488,19 +480,19 @@ export default function ContactSection({ onShowToast }) {
                       </h3>
                       <span className="font-mono-code text-[11px] text-[#22C55E] flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
-                        Live Delivery Ready
+                        Direct Inbox Delivery
                       </span>
                     </div>
 
                     <p className="text-xs sm:text-sm text-[#A1A1AA] mb-4 font-normal">
-                      Fill out the form below to deliver your note directly into Praveen's inbox.
+                      Fill out your note below to send directly to Praveen at <span className="text-[#F5F5F5] font-semibold">{email}</span>.
                     </p>
 
                     {/* Quick Template Chips */}
                     <div className="mb-5 space-y-2">
                       <div className="flex items-center gap-1.5 text-[11px] font-mono-code text-[#71717A]">
                         <Sparkles className="w-3 h-3 text-[#FF4522]" />
-                        <span>QUICK TEMPLATES (OPTIONAL):</span>
+                        <span>QUICK TEMPLATES (CLICK TO PREFILL):</span>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {QUICK_TEMPLATES.map((tmpl) => (
@@ -516,29 +508,13 @@ export default function ContactSection({ onShowToast }) {
                       </div>
                     </div>
 
-                    {/* Native HTML Form targeting hidden iframe */}
                     <form
-                      ref={formRef}
-                      action={`https://formsubmit.co/${email}`}
-                      method="POST"
-                      target="formsubmit_hidden_iframe"
-                      onSubmit={handleSubmit}
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSendVia('gmail');
+                      }}
                       className="space-y-4"
                     >
-                      {/* Hidden configuration fields for FormSubmit */}
-                      <input type="hidden" name="_captcha" value="false" />
-                      <input type="hidden" name="_template" value="table" />
-                      <input
-                        type="hidden"
-                        name="_subject"
-                        value={formState.subject || `Portfolio Message from ${formState.name || 'Visitor'}`}
-                      />
-                      <input
-                        type="hidden"
-                        name="_autoresponse"
-                        value="Thank you for reaching out to Praveen Vedanayagam! I have received your message and will reply shortly."
-                      />
-
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="name" className="block font-mono-code text-xs uppercase tracking-wider text-[#A1A1AA] mb-1.5">
@@ -558,13 +534,12 @@ export default function ContactSection({ onShowToast }) {
 
                         <div>
                           <label htmlFor="email" className="block font-mono-code text-xs uppercase tracking-wider text-[#A1A1AA] mb-1.5">
-                            Email Address *
+                            Your Email Address
                           </label>
                           <input
                             id="email"
                             name="email"
                             type="email"
-                            required
                             value={formState.email}
                             onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                             placeholder="alex@company.com"
@@ -614,47 +589,55 @@ export default function ContactSection({ onShowToast }) {
                         </motion.div>
                       )}
 
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                      {/* Primary and Alternative Dispatch Actions */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                        {/* Primary Button: Instant Gmail Web */}
                         <button
                           type="submit"
-                          disabled={isSending}
-                          className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-[#FF4522] to-[#D92B04] text-[#050505] font-anton text-base tracking-wider uppercase rounded hover:brightness-110 shadow-[0_0_25px_rgba(255,69,34,0.4)] transition-all duration-200 active:scale-95 disabled:opacity-60 cursor-pointer"
+                          className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#FF4522] to-[#D92B04] text-[#050505] font-anton text-base tracking-wider uppercase rounded hover:brightness-110 shadow-[0_0_25px_rgba(255,69,34,0.4)] transition-all duration-200 active:scale-95 cursor-pointer"
                         >
-                          {isSending ? (
-                            <>
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                              <span>DISPATCHING...</span>
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-4 h-4" />
-                              <span>SEND MESSAGE</span>
-                            </>
-                          )}
+                          <Mail className="w-4 h-4 text-[#050505]" />
+                          <span>SEND VIA GMAIL</span>
+                          <ArrowUpRight className="w-4 h-4 text-[#050505]" />
                         </button>
 
-                        <div className="flex items-center gap-3">
-                          <a
-                            href={gmailComposeUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#A1A1AA] hover:text-white transition-colors"
-                            title="Open direct compose in Gmail"
+                        <div className="flex items-center gap-2.5">
+                          {/* Alternative 1: System mailto */}
+                          <button
+                            type="button"
+                            onClick={() => handleSendVia('mailto')}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#D4D4D8] hover:text-white text-xs font-mono-code transition-colors cursor-pointer"
+                            title="Launch default system mail application"
                           >
-                            <Mail className="w-3.5 h-3.5 text-[#EA4335]" />
-                            <span>Or via Gmail Web</span>
-                            <ArrowUpRight className="w-3 h-3 opacity-60" />
-                          </a>
-                          <span className="text-white/20">•</span>
-                          <a
-                            href={mailtoUrl}
-                            className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#A1A1AA] hover:text-[#FF4522] transition-colors"
-                            title="Open default system mail client"
+                            <Send className="w-3.5 h-3.5 text-[#38BDF8]" />
+                            <span>System Mail App</span>
+                          </button>
+
+                          {/* Alternative 2: Copy Draft */}
+                          <button
+                            type="button"
+                            onClick={handleCopyFullDraft}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#A1A1AA] hover:text-white text-xs font-mono-code transition-colors cursor-pointer"
+                            title="Copy formatted message to clipboard"
                           >
-                            <span>Mail app</span>
-                            <ArrowUpRight className="w-3 h-3 opacity-60" />
-                          </a>
+                            {copiedDraft ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-[#22C55E]" />
+                                <span className="text-[#22C55E]">COPIED</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>COPY</span>
+                              </>
+                            )}
+                          </button>
                         </div>
+                      </div>
+
+                      <div className="pt-2 text-[11px] font-mono-code text-[#71717A] flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
+                        <span>Guaranteed 100% direct inbox delivery without third-party email blocking.</span>
                       </div>
                     </form>
                   </motion.div>
