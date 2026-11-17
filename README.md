@@ -3,7 +3,7 @@
 # Praveen Vedanayagam
 ### Full-Stack Software Engineer • Enterprise Java & Distributed Systems
 
-[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-portfolio--mocha--eight--76.vercel.app-FF4522?style=for-the-badge&logo=vercel&logoColor=white)](https://portfolio-mocha-eight-76.vercel.app/)
+[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-tinyurl.com%2Fpraveen--vedanayagam-FF4522?style=for-the-badge&logo=vercel&logoColor=white)](https://tinyurl.com/praveen-vedanayagam)
 [![GitHub](https://img.shields.io/badge/GitHub-praveenvedha26-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/praveenvedha26)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-praveenvedanayagam-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/praveenvedanayagam)
 [![LeetCode](https://img.shields.io/badge/LeetCode-100%2B_DSA_Streak-FFA116?style=for-the-badge&logo=leetcode&logoColor=white)](https://leetcode.com/u/S6sDRAvcKS)
@@ -13,7 +13,7 @@
 > **Editorial dark-mode personal portfolio built with React, Tailwind CSS, and Framer Motion.**  
 > Showcasing scalable full-stack applications, containerized backends, and algorithmic problem-solving.
 
-[**Explore Live Website »**](https://portfolio-mocha-eight-76.vercel.app/)
+[**Explore Live Website (tinyurl.com/praveen-vedanayagam) »**](https://tinyurl.com/praveen-vedanayagam)
 
 </div>
 
@@ -125,7 +125,8 @@ npm run preview
 
 ## 📬 Connect & Contact
 
-- **Live URL:** [portfolio-mocha-eight-76.vercel.app](https://portfolio-mocha-eight-76.vercel.app/)
+- **Live Short URL:** [tinyurl.com/praveen-vedanayagam](https://tinyurl.com/praveen-vedanayagam) *(Alternative: [tinyurl.com/praveenvedha](https://tinyurl.com/praveenvedha))*
+- **Direct Vercel URL:** [portfolio-mocha-eight-76.vercel.app](https://portfolio-mocha-eight-76.vercel.app/)
 - **Email:** [mvpraveenmng@gmail.com](mailto:mvpraveenmng@gmail.com)
 - **LinkedIn:** [linkedin.com/in/praveenvedanayagam](https://www.linkedin.com/in/praveenvedanayagam)
 - **GitHub:** [github.com/praveenvedha26](https://github.com/praveenvedha26)
