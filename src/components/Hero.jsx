@@ -170,7 +170,7 @@ export default function Hero({ onOpenContact }) {
 
                 {/* Secondary sleek dark glass button */}
                 <a
-                  href="/Praveen_MV_Resume.pdf"
+                  href="/resume.pdf"
                   download="Praveen_MV_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -368,7 +368,7 @@ export default function Hero({ onOpenContact }) {
           </a>
 
           <a
-            href="/Praveen_MV_Resume.pdf"
+            href="/resume.pdf"
             download="Praveen_MV_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"

@@ -22,12 +22,12 @@ export const skillsPillars = [
     accent: "#10B981",
     skills: [
       { name: "Spring Boot", level: "Advanced", note: "Enterprise REST APIs, Spring Security, JPA, Hibernate" },
-      { name: "Node.js", level: "Advanced", note: "Event-driven runtime, Non-blocking I/O" },
-      { name: "Express.js", level: "Advanced", note: "RESTful architecture, Middleware pipeline" },
-      { name: "PostgreSQL", level: "Proficient", note: "ACID transactions, Relational design" },
-      { name: "MySQL", level: "Proficient", note: "Normalized schemas, Query optimization" },
-      { name: "MongoDB Atlas", level: "Proficient", note: "Document modeling, Aggregation" },
-      { name: "Redis", level: "Proficient", note: "In-memory caching, 10-min TTL seat locking" }
+      { name: "SQL (MySQL & PostgreSQL)", level: "Advanced", note: "ACID transactions, relational schemas, indexing & optimization" },
+      { name: "PostgreSQL", level: "Proficient", note: "Relational persistence, complex joins, constraint rules" },
+      { name: "MySQL", level: "Proficient", note: "Normalized schemas, transaction safety, high-read queries" },
+      { name: "Node.js & Express", level: "Advanced", note: "RESTful architecture, asynchronous microservices" },
+      { name: "Redis", level: "Proficient", note: "In-memory caching, 10-min TTL distributed seat locking" },
+      { name: "MongoDB Atlas", level: "Proficient", note: "Document modeling, flexible aggregations" }
     ],
     highlight: "Enterprise Spring Boot microservices and robust database architectures with distributed concurrency controls."
   },

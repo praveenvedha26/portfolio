@@ -87,11 +87,10 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => scrollTo(e, link.href)}
-                className={`relative px-4 py-1 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-200 ${
-                  isActive
-                    ? 'text-white bg-[#FF4522] shadow-[0_0_15px_rgba(255,69,34,0.4)]'
-                    : 'text-[#A1A1AA] hover:text-[#F5F5F5] hover:bg-white/5'
-                }`}
+                className={`relative px-4 py-1 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-200 ${isActive
+                  ? 'text-white bg-[#FF4522] shadow-[0_0_15px_rgba(255,69,34,0.4)]'
+                  : 'text-[#A1A1AA] hover:text-[#F5F5F5] hover:bg-white/5'
+                  }`}
               >
                 {link.name}
               </a>
@@ -112,7 +111,7 @@ export default function Navbar() {
           </div>
 
           <a
-            href="/Praveen_MV_Resume.pdf"
+            href="/resume.pdf"
             download="Praveen_MV_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
@@ -175,7 +174,7 @@ export default function Navbar() {
 
             <div className="pt-2 border-t border-white/10 mt-1 flex flex-col gap-2">
               <a
-                href="/Praveen_MV_Resume.pdf"
+                href="/resume.pdf"
                 download="Praveen_MV_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
