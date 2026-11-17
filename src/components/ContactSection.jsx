@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Copy, Check, ExternalLink, Code, Send, Loader2, ArrowUpRight } from 'lucide-react';
+import { Mail, Copy, Check, ExternalLink, Code, Send, Loader2, ArrowUpRight, AlertCircle } from 'lucide-react';
 
 function GithubIcon({ className = "w-5 h-5" }) {
   return (
@@ -31,6 +31,7 @@ export default function ContactSection({ onShowToast }) {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSending, setIsSending] = useState(false);
   const [sentSuccess, setSentSuccess] = useState(false);
+  const [formFeedback, setFormFeedback] = useState(null);
 
   const email = 'mvpraveenmng@gmail.com';
 
@@ -49,22 +50,78 @@ export default function ContactSection({ onShowToast }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
 
     setIsSending(true);
+    setFormFeedback(null);
 
-    // Simulate sending dispatch
-    setTimeout(() => {
-      setIsSending(false);
-      setSentSuccess(true);
-      if (onShowToast) {
-        onShowToast('Message dispatched! Praveen will reply soon.');
+    const submissionData = {
+      name: formState.name,
+      email: formState.email,
+      message: formState.message,
+      _subject: `New Portfolio Message from ${formState.name}`,
+      _template: 'table',
+      _captcha: 'false'
+    };
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(submissionData)
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (data && (data.success === 'true' || data.success === true)) {
+        setIsSending(false);
+        setSentSuccess(true);
+        setFormFeedback({
+          type: 'success',
+          message: `Message delivered directly to ${email}! Praveen will reply soon.`
+        });
+        if (onShowToast) {
+          onShowToast(`Delivered to ${email}!`);
+        }
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setSentSuccess(false), 7000);
+      } else if (data && data.message && data.message.toLowerCase().includes('activation')) {
+        setIsSending(false);
+        setSentSuccess(true);
+        setFormFeedback({
+          type: 'info',
+          message: `Activation email sent to ${email}. Please check your inbox and click "Activate Form" once to activate incoming messages!`
+        });
+        if (onShowToast) {
+          onShowToast(`Activation email sent to ${email}`);
+        }
+        setFormState({ name: '', email: '', message: '' });
+      } else {
+        throw new Error((data && data.message) || 'Service response failed');
       }
-      setFormState({ name: '', email: '', message: '' });
-      setTimeout(() => setSentSuccess(false), 5000);
-    }, 900);
+    } catch (err) {
+      console.warn('FormSubmit AJAX send issue:', err);
+      setIsSending(false);
+      const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+        `Portfolio Inquiry from ${formState.name}`
+      )}&body=${encodeURIComponent(
+        `Hi Praveen,\n\n${formState.message}\n\nBest,\n${formState.name}\n${formState.email}`
+      )}`;
+      
+      setFormFeedback({
+        type: 'error',
+        message: 'Could not connect to instant delivery service. Click below to launch your email client:',
+        mailtoLink
+      });
+      if (onShowToast) {
+        onShowToast('Direct sending unavailable — use email client');
+      }
+    }
   };
 
   const socialLinks = [
@@ -140,14 +197,19 @@ export default function ContactSection({ onShowToast }) {
               </div>
 
               <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#131318] p-3 rounded-xl border border-white/5">
-                <span className="font-mono-code text-xs sm:text-sm text-[#F5F5F5] font-semibold truncate select-all">
-                  {email}
-                </span>
+                <a
+                  href={`mailto:${email}?subject=Portfolio%20Inquiry`}
+                  className="font-mono-code text-xs sm:text-sm text-[#F5F5F5] hover:text-[#FF4522] font-semibold truncate select-all transition-colors flex items-center gap-1.5"
+                  title="Click to open email client"
+                >
+                  <span>{email}</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-60 shrink-0" />
+                </a>
 
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FF4522]/15 hover:bg-[#FF4522] text-[#FF4522] hover:text-[#050505] font-mono-code text-xs font-bold transition-all duration-200 active:scale-95 shrink-0"
+                  className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FF4522]/15 hover:bg-[#FF4522] text-[#FF4522] hover:text-[#050505] font-mono-code text-xs font-bold transition-all duration-200 active:scale-95 shrink-0 cursor-pointer"
                   aria-label="Copy email address"
                 >
                   {copied ? (
@@ -254,28 +316,74 @@ export default function ContactSection({ onShowToast }) {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSending}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-[#FF4522] to-[#D92B04] text-[#050505] font-anton text-base tracking-wider uppercase rounded hover:brightness-110 shadow-[0_0_25px_rgba(255,69,34,0.4)] transition-all duration-200 active:scale-95 disabled:opacity-60"
-                >
-                  {isSending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>DISPATCHING...</span>
-                    </>
-                  ) : sentSuccess ? (
-                    <>
-                      <Check className="w-4 h-4" />
-                      <span>MESSAGE SENT!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      <span>SEND MESSAGE</span>
-                    </>
-                  )}
-                </button>
+                {formFeedback && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-xl border text-xs font-mono-code leading-relaxed ${
+                      formFeedback.type === 'success'
+                        ? 'bg-[#22C55E]/10 border-[#22C55E]/30 text-[#4ADE80]'
+                        : formFeedback.type === 'info'
+                        ? 'bg-[#F59E0B]/10 border-[#F59E0B]/30 text-[#FBBF24]'
+                        : 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#F87171]'
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5">
+                      {formFeedback.type === 'success' ? (
+                        <Check className="w-4 h-4 shrink-0 text-[#22C55E] mt-0.5" />
+                      ) : (
+                        <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                      )}
+                      <div className="space-y-2">
+                        <p>{formFeedback.message}</p>
+                        {formFeedback.mailtoLink && (
+                          <a
+                            href={formFeedback.mailtoLink}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#EF4444]/20 hover:bg-[#EF4444]/30 text-white rounded font-semibold transition-colors"
+                          >
+                            <Mail className="w-3.5 h-3.5" />
+                            <span>Launch Email App (mailto)</span>
+                            <ArrowUpRight className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSending}
+                    className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-[#FF4522] to-[#D92B04] text-[#050505] font-anton text-base tracking-wider uppercase rounded hover:brightness-110 shadow-[0_0_25px_rgba(255,69,34,0.4)] transition-all duration-200 active:scale-95 disabled:opacity-60 cursor-pointer"
+                  >
+                    {isSending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>DISPATCHING...</span>
+                      </>
+                    ) : sentSuccess ? (
+                      <>
+                        <Check className="w-4 h-4" />
+                        <span>DISPATCHED!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>SEND MESSAGE</span>
+                      </>
+                    )}
+                  </button>
+
+                  <a
+                    href={`mailto:${email}?subject=Portfolio%20Inquiry%20from%20Website`}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#A1A1AA] hover:text-[#FF4522] transition-colors"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Or send via email client</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                </div>
               </form>
             </div>
           </div>
