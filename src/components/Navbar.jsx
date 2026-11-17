@@ -53,11 +53,10 @@ export default function Navbar() {
       {/* Floating Glassmorphic Pill */}
       <nav
         aria-label="Main Navigation"
-        className={`pointer-events-auto flex items-center justify-between gap-3 sm:gap-4 md:gap-8 px-3.5 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] shadow-[#FF4522]/5 py-2'
-            : 'bg-[#0D0D0E]/75 backdrop-blur-md border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
-        }`}
+        className={`pointer-events-auto flex items-center justify-between gap-3 sm:gap-4 md:gap-8 px-3.5 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full transition-all duration-300 ${scrolled
+          ? 'bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] shadow-[#FF4522]/5 py-2'
+          : 'bg-[#0D0D0E]/75 backdrop-blur-md border border-white/8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+          }`}
       >
         {/* Monogram Icon (Always Accessible on Mobile & Desktop) */}
         <a
@@ -160,11 +159,10 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => scrollTo(e, link.href)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors flex items-center justify-between ${
-                    isActive
-                      ? 'bg-[#FF4522]/20 text-[#FF4522] border border-[#FF4522]/30'
-                      : 'text-[#F5F5F5] hover:bg-white/5 hover:text-white'
-                  }`}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-colors flex items-center justify-between ${isActive
+                    ? 'bg-[#FF4522]/20 text-[#FF4522] border border-[#FF4522]/30'
+                    : 'text-[#F5F5F5] hover:bg-white/5 hover:text-white'
+                    }`}
                 >
                   <span>{link.name}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />

@@ -123,7 +123,7 @@ export default function Hero({ onOpenContact }) {
         {/* DESKTOP FOREGROUND CONTENT: Left Column & Right Column Overlays */}
         <div className="relative z-[30] w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex-1 flex flex-col justify-center">
           <div className="grid grid-cols-12 gap-8 items-center">
-            
+
             {/* LEFT COLUMN OVERLAY */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -241,11 +241,10 @@ export default function Hero({ onOpenContact }) {
             <button
               type="button"
               onClick={() => setShowCursors(!showCursors)}
-              className={`p-2 rounded-xl transition-all duration-200 cursor-pointer ${
-                showCursors
-                  ? 'bg-[#FF4522]/20 text-[#FF4522] border border-[#FF4522]/40'
-                  : 'text-[#71717A] hover:text-white hover:bg-white/5'
-              }`}
+              className={`p-2 rounded-xl transition-all duration-200 cursor-pointer ${showCursors
+                ? 'bg-[#FF4522]/20 text-[#FF4522] border border-[#FF4522]/40'
+                : 'text-[#71717A] hover:text-white hover:bg-white/5'
+                }`}
               title="Toggle Cursors"
               aria-label="Toggle floating skill cursors"
             >
@@ -289,7 +288,7 @@ export default function Hero({ onOpenContact }) {
       {/* MOBILE & TABLET HERO VIEW (< lg) — CLEAN NATURAL VERTICAL STACKING ORDER  */}
       {/* ========================================================================= */}
       <div className="flex flex-col lg:hidden w-full px-4 sm:px-6 pt-20 pb-12 relative z-20">
-        
+
         {/* Subtle Watermark in Background */}
         <div
           className="pointer-events-none absolute top-12 left-0 right-0 z-0 flex justify-center items-center overflow-hidden opacity-20 select-none"
@@ -307,7 +306,7 @@ export default function Hero({ onOpenContact }) {
         <div className="relative z-10 w-full flex items-center justify-center pt-2 pb-4">
           {/* Back Glow */}
           <div className="absolute w-[220px] sm:w-[280px] h-[220px] sm:h-[280px] rounded-full bg-gradient-to-t from-[#FF4522]/25 via-[#D92B04]/10 to-transparent blur-3xl pointer-events-none" />
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
