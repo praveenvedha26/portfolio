@@ -105,7 +105,7 @@ export default function Hero({ onOpenContact }) {
       {/* ======================================================== */}
       <AnimatePresence>
         {showCursors && (
-          <div className="absolute inset-0 z-[45] pointer-events-none w-full overflow-hidden">
+          <div className="absolute inset-0 z-[45] pointer-events-none w-full">
             {floatingBadges.map((badge) => (
               <FloatingCursorBadge
                 key={badge.name}

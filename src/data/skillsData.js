@@ -63,19 +63,20 @@ export const skillsPillars = [
   }
 ];
 
-// 8 Floating multiplayer cursor badges strictly positioned in the open outer margins:
-// 4 on the outer left flanks, 4 on the outer right flanks.
-// None overlap or hide behind the center portrait cutout or the left text box.
+// Dynamic Figma-style floating multiplayer cursor badges scattered across outer edges:
+// Java and Spring Boot are given prime, prominent, unobstructed whitespace placement.
 export const floatingBadges = [
-  // Outer Left Margins (clear of the left text column)
-  { name: "React", color: "#38BDF8", top: "12%", left: "3%", delay: 0, dx: 8, dy: -10 },
-  { name: "Python", color: "#EAB308", top: "34%", left: "1.5%", delay: 0.2, dx: 10, dy: 8 },
-  { name: "Node.js", color: "#10B981", top: "54%", left: "1.5%", delay: 0.4, dx: 8, dy: -10 },
-  { name: "Redis", color: "#EF4444", bottom: "10%", left: "3%", delay: 0.6, dx: 10, dy: -8 },
-
-  // Outer Right Margins (clear of the stats column and portrait)
-  { name: "Spring Boot", color: "#22C55E", top: "12%", right: "4%", delay: 0.8, dx: -8, dy: 10 },
-  { name: "Docker", color: "#3B82F6", top: "32%", right: "2%", delay: 1.0, dx: -10, dy: -8 },
-  { name: "C++", color: "#6366F1", top: "54%", right: "2%", delay: 1.2, dx: -8, dy: 10 },
-  { name: "PostgreSQL", color: "#F59E0B", bottom: "10%", right: "4%", delay: 1.4, dx: -10, dy: 8 }
+  // Prominent Top-Left Margin (Java)
+  { name: "Java", color: "#F97316", top: "16%", left: "12%", delay: 0, dx: 12, dy: -12 },
+  
+  // Prominent Top-Right Margin (Spring Boot)
+  { name: "Spring Boot", color: "#22C55E", top: "16%", right: "12%", delay: 0.2, dx: -12, dy: 14 },
+  
+  // Dynamic Flanks surrounding central portrait & text
+  { name: "React", color: "#38BDF8", top: "28%", left: "4%", delay: 0.4, dx: 14, dy: -10 },
+  { name: "Docker", color: "#3B82F6", top: "34%", right: "6%", delay: 0.6, dx: -14, dy: -12 },
+  { name: "Python", color: "#EAB308", top: "48%", left: "5%", delay: 0.8, dx: 12, dy: 10 },
+  { name: "Node.js", color: "#10B981", top: "58%", right: "8%", delay: 1.0, dx: -10, dy: 14 },
+  { name: "C++", color: "#6366F1", top: "76%", right: "14%", delay: 1.2, dx: -12, dy: -10 },
+  { name: "Redis", color: "#EF4444", bottom: "12%", left: "8%", delay: 1.4, dx: 14, dy: 8 }
 ];
