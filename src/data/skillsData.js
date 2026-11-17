@@ -66,30 +66,30 @@ export const skillsPillars = [
 // Exactly the 9 requested floating multiplayer cursor badges:
 // (Java, SpringBoot, MYSQL, POSTGRESQL, Docker, ReactJS, Javascript, C++, Python)
 export const floatingBadges = [
-  // 1. Java
-  { name: "Java", color: "#F97316", top: "16%", left: "14%", delay: 0, dx: 10, dy: -8, icon: "☕" },
+  // 1. Javascript (Amber)
+  { name: "Javascript", color: "#F59E0B", top: "16%", left: "14%", delay: 0, dx: 10, dy: -8 },
 
-  // 2. SpringBoot
-  { name: "SpringBoot", color: "#22C55E", top: "18%", right: "14%", delay: 0.15, dx: -10, dy: 10, icon: "🍃" },
+  // 2. SpringBoot (Green)
+  { name: "SpringBoot", color: "#22C55E", top: "18%", right: "14%", delay: 0.15, dx: -10, dy: 10 },
 
-  // 3. ReactJS
-  { name: "ReactJS", color: "#38BDF8", top: "31%", right: "31%", delay: 0.3, dx: 8, dy: -8, icon: "⚛" },
+  // 3. ReactJS (Cyan)
+  { name: "ReactJS", color: "#38BDF8", top: "31%", right: "31%", delay: 0.3, dx: 8, dy: -8 },
 
-  // 4. Docker
-  { name: "Docker", color: "#3B82F6", top: "39%", right: "17%", delay: 0.45, dx: -10, dy: 8, icon: "🐳" },
+  // 4. Docker (Blue)
+  { name: "Docker", color: "#3B82F6", top: "39%", right: "17%", delay: 0.45, dx: -10, dy: 8 },
 
-  // 5. Python
-  { name: "Python", color: "#EAB308", top: "53%", right: "18%", delay: 0.6, dx: 10, dy: 8, icon: "🐍" },
+  // 5. Python (Yellow)
+  { name: "Python", color: "#EAB308", top: "53%", right: "18%", delay: 0.6, dx: 10, dy: 8 },
 
-  // 6. Javascript
-  { name: "Javascript", color: "#F59E0B", top: "58%", left: "40%", delay: 0.75, dx: -8, dy: 8, icon: "JS" },
+  // 6. Java (Warm Orange) - changed from "JS Javascript" into "Java"
+  { name: "Java", color: "#F97316", top: "58%", left: "40%", delay: 0.75, dx: -8, dy: 8 },
 
-  // 7. C++
-  { name: "C++", color: "#6366F1", top: "67%", right: "24%", delay: 0.9, dx: 8, dy: -6, icon: "++" },
+  // 7. C++ (Indigo) - changed from "++ C++" into "C++"
+  { name: "C++", color: "#6366F1", top: "67%", right: "24%", delay: 0.9, dx: 8, dy: -6 },
 
-  // 8. MYSQL
-  { name: "MYSQL", color: "#0284C7", top: "74%", left: "42%", delay: 1.05, dx: 6, dy: -8, icon: "🐬" },
+  // 8. MYSQL (Sky Blue)
+  { name: "MYSQL", color: "#0284C7", top: "74%", left: "42%", delay: 1.05, dx: 6, dy: -8 },
 
-  // 9. POSTGRESQL
-  { name: "POSTGRESQL", color: "#3B82F6", top: "81%", right: "22%", delay: 1.2, dx: -8, dy: 8, icon: "🐘" }
+  // 9. POSTGRESQL (Royal Blue)
+  { name: "POSTGRESQL", color: "#3B82F6", top: "81%", right: "22%", delay: 1.2, dx: -8, dy: 8 }
 ];

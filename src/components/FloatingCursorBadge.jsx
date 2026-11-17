@@ -11,7 +11,6 @@ export default function FloatingCursorBadge({
   delay = 0,
   dx = 8,
   dy = -8,
-  icon,
   mousePosition = { x: 0, y: 0 }
 }) {
   // Parallax offset based on normalized mouse position (-1 to 1)
@@ -78,7 +77,7 @@ export default function FloatingCursorBadge({
           </svg>
         </div>
 
-        {/* Multiplayer Pill Label with Icon */}
+        {/* Multiplayer Pill Label */}
         <div
           style={{
             backgroundColor: color,
@@ -86,11 +85,7 @@ export default function FloatingCursorBadge({
           }}
           className="ml-3 px-2.5 py-0.5 rounded-full rounded-tl-sm flex items-center gap-1.5 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 border border-black/15"
         >
-          {icon ? (
-            <span className="text-[10px] text-black shrink-0 font-bold">{icon}</span>
-          ) : (
-            <span className="w-1.5 h-1.5 rounded-full bg-black/40"></span>
-          )}
+          <span className="w-1.5 h-1.5 rounded-full bg-black/40"></span>
           <span className="font-mono-code font-bold text-[11px] tracking-tight text-black whitespace-nowrap">
             {name}
           </span>
