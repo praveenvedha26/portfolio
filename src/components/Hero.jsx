@@ -105,7 +105,7 @@ export default function Hero({ onOpenContact }) {
       {/* ======================================================== */}
       <AnimatePresence>
         {showCursors && (
-          <div className="absolute inset-0 z-[20] pointer-events-none max-w-7xl mx-auto">
+          <div className="absolute inset-0 z-[45] pointer-events-none w-full overflow-hidden">
             {floatingBadges.map((badge) => (
               <FloatingCursorBadge
                 key={badge.name}
@@ -114,6 +114,7 @@ export default function Hero({ onOpenContact }) {
                 top={badge.top}
                 left={badge.left}
                 right={badge.right}
+                bottom={badge.bottom}
                 delay={badge.delay}
                 dx={badge.dx}
                 dy={badge.dy}
@@ -163,7 +164,7 @@ export default function Hero({ onOpenContact }) {
 
             {/* Short 3-line bio in light gray */}
             <p className="mt-4 sm:mt-5 text-[#A1A1AA] text-sm sm:text-base md:text-[1.05rem] leading-relaxed max-w-xl font-normal">
-              I build scalable full-stack web applications, containerized backends, and AI-powered workflows that ship. Electronics & Communication Engineering graduate (2026) focused on clean architecture, DSA, and high-performance systems.
+              I build scalable full-stack web applications, containerized backends, and AI-powered workflows using Java, Spring Boot, and modern web tech. Focused on clean enterprise architecture, robust backend systems, and high-performance engineering.
             </p>
 
             {/* Dual Action Buttons */}

@@ -39,7 +39,7 @@ export default function TechnicalArsenal() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="font-mono-code text-xs text-[#FF4522] tracking-widest uppercase font-semibold">
-                // 02. TECHNICAL ARSENAL
+                // 03. TECHNICAL ARSENAL
               </span>
               <div className="h-[1px] w-12 bg-[#FF4522]/40" />
             </div>

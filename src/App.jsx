@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProjectsSection from './components/ProjectsSection';
+import EducationSection from './components/EducationSection';
 import TechnicalArsenal from './components/TechnicalArsenal';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
@@ -36,7 +37,10 @@ export default function App() {
         {/* Selected Work Section (6 Projects + Morphing Full-View Modal) */}
         <ProjectsSection />
 
-        {/* Technical Arsenal Section (4 Pillars Bento Grid) */}
+        {/* Dedicated Education & Background Section */}
+        <EducationSection />
+
+        {/* Technical Arsenal Section (4 Pillars Bento Grid - Java & SQL First) */}
         <TechnicalArsenal />
 
         {/* Contact & Footer Section */}
