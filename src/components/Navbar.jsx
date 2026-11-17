@@ -73,7 +73,7 @@ export default function Navbar() {
             </div>
           </div>
           <span className="hidden sm:inline font-mono-code text-[11px] font-medium tracking-widest text-[#A1A1AA] uppercase group-hover:text-[#F5F5F5] transition-colors">
-            Praveen.v
+            Praveen MV
           </span>
         </a>
 
