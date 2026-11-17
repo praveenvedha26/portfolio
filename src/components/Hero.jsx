@@ -142,13 +142,10 @@ export default function Hero({ onOpenContact }) {
               </span>
             </div>
 
-            {/* Massive condensed white display name with square dot */}
+            {/* Massive condensed white display name */}
             <h2 className="font-anton uppercase tracking-tight text-[#F5F5F5] leading-[0.88] text-5xl sm:text-7xl md:text-8xl lg:text-[5.4rem] xl:text-[6.2rem] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
               PRAVEEN<br />
-              <span className="inline-flex items-baseline">
-                VEDANAYAGAM
-                <span className="inline-block w-3 h-3 sm:w-3.5 sm:h-3.5 bg-[#FF4522] ml-1.5 sm:ml-2 align-baseline shadow-[0_0_12px_#FF4522]" />
-              </span>
+              VEDANAYAGAM
             </h2>
 
             {/* Bold uppercase condensed red-orange subtitle */}
