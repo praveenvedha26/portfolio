@@ -7,21 +7,21 @@ export const projectsData = [
     category: "Distributed Systems & Full-Stack",
     featuredBadge: "High Concurrency",
     githubUrl: "https://github.com/praveenvedha26/BookInstant",
-    techStack: ["Docker", "PostgreSQL", "Redis", "Node.js", "Express", "React"],
+    techStack: ["Java", "Spring Boot", "Docker", "PostgreSQL", "Redis", "React"],
     summary:
-      "Full-stack online movie ticket booking web application orchestrated via Docker containers. Features a PostgreSQL relational schema for shows, theaters, and bookings, paired with a high-concurrency Redis 10-minute temporary seat-locking pipeline to prevent double-booking race conditions during checkout.",
+      "Enterprise full-stack online movie ticket booking engine built with Java, Spring Boot, and React, containerized via Docker. Features a PostgreSQL relational schema for shows, theaters, and bookings, paired with a high-concurrency Redis 10-minute temporary seat-locking pipeline to prevent double-booking race conditions during checkout.",
     architecture: {
-      type: "Microservices & Distributed Caching",
+      type: "Distributed Enterprise Backend & In-Memory Locking",
       diagram: [
         { layer: "Frontend Client", tech: "React SPA", desc: "Interactive seat grid matrix with real-time optimistic seat reservation feedback" },
-        { layer: "API Gateway & Server", tech: "Node.js / Express", desc: "Stateless REST endpoints handling authorization, booking workflows, and transactions" },
+        { layer: "Backend Service Core", tech: "Java / Spring Boot", desc: "Enterprise RESTful controllers managing booking workflows, seat reservations, and transactional safety" },
         { layer: "Distributed In-Memory Lock", tech: "Redis (Key-TTL)", desc: "10-minute atomic temporary lock per seat with auto-expiration to resolve checkout contention" },
         { layer: "Relational Storage", tech: "PostgreSQL Database", desc: "ACID-compliant transactions recording confirmed tickets, auditoriums, and user history" },
         { layer: "Container Orchestration", tech: "Docker Compose", desc: "Isolated network bridges linking client, backend, Redis broker, and PostgreSQL daemon" }
       ],
       highlights: [
         "Eliminated race conditions via atomic Redis SETNX operations with 10-minute TTL expiration.",
-        "ACID database transactions rolling back seat statuses if payment pipeline times out.",
+        "ACID database transactions in Spring Boot rolling back seat statuses if payment pipeline times out.",
         "Zero-dependency local setup facilitated by multi-stage Docker Compose orchestration."
       ]
     },
@@ -33,7 +33,7 @@ export const projectsData = [
       "Fully containerized local multi-container development environment"
     ],
     metrics: [
-      { label: "Seat Lock TTL", value: "10 Min" },
+      { label: "Backend Core", value: "Spring Boot" },
       { label: "Race Prevention", value: "100%" },
       { label: "Deployment", value: "Dockerized" }
     ]
@@ -197,15 +197,15 @@ export const projectsData = [
     category: "Problem Solving & Optimization",
     featuredBadge: "Optimal Patterns",
     githubUrl: "https://github.com/praveenvedha26/-leetcode-solutions",
-    techStack: ["C++", "Python", "LeetCode", "Problem Solving", "Time & Space Optimization"],
+    techStack: ["Java", "C++", "Python", "LeetCode", "Problem Solving", "Time & Space Optimization"],
     summary:
-      "Organized collection of optimal LeetCode problem solutions categorized by algorithmic patterns (Two Pointers, Binary Search, Backtracking, DP, Greedy), complete with clean code and time/space complexity breakdowns.",
+      "Organized collection of optimal LeetCode problem solutions implemented primarily in Java, alongside C++ and Python, categorized by algorithmic patterns (Two Pointers, Binary Search, Backtracking, DP, Greedy), complete with clean code and time/space complexity breakdowns.",
     architecture: {
       type: "Pattern-Oriented Problem Solving Matrix",
       diagram: [
         { layer: "Pattern Categorization", tech: "Algorithmic Paradigms", desc: "Sliding Window, Fast & Slow Pointers, Monotonic Stacks, Top K Elements" },
         { layer: "Optimization Pipeline", tech: "Time & Space Tuning", desc: "Refining naive recursive algorithms to memoized and bottom-up DP" },
-        { layer: "Language Idioms", tech: "C++ STL & Python Tricks", desc: "Utilizing fast I/O, custom comparators, priority queues, and bitmasking" }
+        { layer: "Language Idioms", tech: "Java, C++ STL & Python", desc: "Utilizing Java Collections framework, C++ STL, custom comparators, priority queues, and bitmasking" }
       ],
       highlights: [
         "Pattern handbook structure allowing instant lookup of recurring interview motifs.",
@@ -215,13 +215,13 @@ export const projectsData = [
     },
     keyFeatures: [
       "Categorized by standard engineering interview patterns (Two Pointers, Monotonic Stack, Backtracking)",
-      "Zero-overhead C++ implementations with optimal memory utilization",
+      "Zero-overhead Java and C++ implementations with optimal memory utilization",
       "Detailed markdown explanations explaining WHY an algorithm is optimal",
       "Side-by-side comparison of naive vs optimal solutions for challenging DP problems",
       "Comprehensive handbook serving as a ready-reference for technical screening"
     ],
     metrics: [
-      { label: "Focus", value: "Patterns" },
+      { label: "Core Language", value: "Java / C++" },
       { label: "Efficiency", value: "Top Percentile" },
       { label: "Profile", value: "LeetCode Active" }
     ]
