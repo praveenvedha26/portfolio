@@ -155,15 +155,10 @@ export default function Hero({ onOpenContact }) {
               </h3>
             </div>
 
-            {/* Bio: Exact 2 paragraphs from the reference screenshot */}
-            <div className="mt-4 sm:mt-5 space-y-2.5 max-w-lg text-[#A1A1AA] text-sm sm:text-base leading-relaxed font-normal">
-              <p>
-                I build scalable full-stack web applications, containerized backends, and AI-powered workflows that ship.
-              </p>
-              <p>
-                Electronics & Communication Engineering graduate (2026) focused on clean architecture, DSA, and high-performance systems.
-              </p>
-            </div>
+            {/* Bio: Exact content from user specification */}
+            <p className="mt-4 sm:mt-5 max-w-xl text-[#A1A1AA] text-sm sm:text-base leading-relaxed font-normal">
+              I build scalable full-stack web applications, containerized backends, and AI-powered workflows using Java, Spring Boot, and modern web tech. Focused on clean enterprise architecture, robust backend systems, and high-performance engineering.
+            </p>
 
             {/* Dual Action Buttons */}
             <div className="mt-7 sm:mt-8 flex flex-wrap items-center gap-4 w-full sm:w-auto">

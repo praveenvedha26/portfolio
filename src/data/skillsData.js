@@ -63,32 +63,33 @@ export const skillsPillars = [
   }
 ];
 
-// Reference Screenshot Matching Figma Cursors:
+// Exactly the 9 requested floating multiplayer cursor badges:
+// (Java, SpringBoot, MYSQL, POSTGRESQL, Docker, ReactJS, Javascript, C++, Python)
 export const floatingBadges = [
-  // 1. React (Cyan) - right next to cheek/ear
-  { name: "React", color: "#38BDF8", top: "31%", right: "32%", delay: 0, dx: 8, dy: -8, icon: "⚛" },
+  // 1. Java
+  { name: "Java", color: "#F97316", top: "16%", left: "14%", delay: 0, dx: 10, dy: -8, icon: "☕" },
 
-  // 2. React (Green) - on top-right letter 'O' of PORTFOLIO
-  { name: "React", color: "#22C55E", top: "24%", right: "9%", delay: 0.2, dx: -6, dy: 6, icon: "⌘" },
+  // 2. SpringBoot
+  { name: "SpringBoot", color: "#22C55E", top: "18%", right: "14%", delay: 0.15, dx: -10, dy: 10, icon: "🍃" },
 
-  // 3. Docker (Blue) - beside right shoulder/neck
-  { name: "Docker", color: "#3B82F6", top: "39%", right: "17%", delay: 0.3, dx: -10, dy: 8, icon: "🐳" },
+  // 3. ReactJS
+  { name: "ReactJS", color: "#38BDF8", top: "31%", right: "31%", delay: 0.3, dx: 8, dy: -8, icon: "⚛" },
 
-  // 4. Spring Boot (Green) - outer right under 'O'
-  { name: "Spring Boot", color: "#22C55E", top: "45%", right: "4%", delay: 0.4, dx: -8, dy: -10, icon: "⏻" },
+  // 4. Docker
+  { name: "Docker", color: "#3B82F6", top: "39%", right: "17%", delay: 0.45, dx: -10, dy: 8, icon: "🐳" },
 
-  // 5. Python (Yellow) - mid-right flank
-  { name: "Python", color: "#EAB308", top: "53%", right: "19%", delay: 0.5, dx: 10, dy: 8, icon: "🐍" },
+  // 5. Python
+  { name: "Python", color: "#EAB308", top: "53%", right: "18%", delay: 0.6, dx: 10, dy: 8, icon: "🐍" },
 
-  // 6. Node.js (Emerald) - over left collar/lapel
-  { name: "Node.js", color: "#10B981", top: "58%", left: "41%", delay: 0.6, dx: -6, dy: 6, icon: "⬡" },
+  // 6. Javascript
+  { name: "Javascript", color: "#F59E0B", top: "58%", left: "40%", delay: 0.75, dx: -8, dy: 8, icon: "JS" },
 
-  // 7. C++ (Indigo) - over right shoulder/coat
-  { name: "C++", color: "#6366F1", top: "67%", right: "24%", delay: 0.7, dx: 8, dy: -6, icon: "++" },
+  // 7. C++
+  { name: "C++", color: "#6366F1", top: "67%", right: "24%", delay: 0.9, dx: 8, dy: -6, icon: "++" },
 
-  // 8. Resv / Client (Sky Blue) - lower left chest
-  { name: "Resv", color: "#38BDF8", top: "73%", left: "42%", delay: 0.8, dx: 6, dy: -8, icon: "⚡" },
+  // 8. MYSQL
+  { name: "MYSQL", color: "#0284C7", top: "74%", left: "42%", delay: 1.05, dx: 6, dy: -8, icon: "🐬" },
 
-  // 9. Redis (Red) - lower right coat
-  { name: "Redis", color: "#EF4444", top: "81%", right: "22%", delay: 0.9, dx: -8, dy: 8, icon: "❖" }
+  // 9. POSTGRESQL
+  { name: "POSTGRESQL", color: "#3B82F6", top: "81%", right: "22%", delay: 1.2, dx: -8, dy: 8, icon: "🐘" }
 ];
