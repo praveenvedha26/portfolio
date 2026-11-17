@@ -10,16 +10,17 @@ export default function FloatingCursorBadge({
   bottom,
   delay = 0,
   dx = 8,
-  dy = -10,
+  dy = -8,
+  icon,
   mousePosition = { x: 0, y: 0 }
 }) {
   // Parallax offset based on normalized mouse position (-1 to 1)
-  const parallaxX = mousePosition.x * dx * 1.5;
-  const parallaxY = mousePosition.y * dy * 1.5;
+  const parallaxX = mousePosition.x * dx * 1.4;
+  const parallaxY = mousePosition.y * dy * 1.4;
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+      initial={{ opacity: 0, scale: 0.8, y: 15 }}
       animate={{
         opacity: 1,
         scale: 1,
@@ -31,7 +32,7 @@ export default function FloatingCursorBadge({
         type: 'spring',
         stiffness: 90,
         damping: 15,
-        delay: delay * 0.4
+        delay: delay * 0.25
       }}
       style={{
         position: 'absolute',
@@ -39,9 +40,9 @@ export default function FloatingCursorBadge({
         left,
         right,
         bottom,
-        zIndex: 25
+        zIndex: 35
       }}
-      className="pointer-events-auto select-none group cursor-pointer"
+      className="hidden sm:block pointer-events-auto select-none group cursor-pointer"
     >
       {/* Floating gentle bounce container */}
       <motion.div
@@ -50,7 +51,7 @@ export default function FloatingCursorBadge({
           x: [0, dx * 0.5, 0]
         }}
         transition={{
-          duration: 4.5 + delay * 1.2,
+          duration: 4.2 + delay * 0.8,
           repeat: Infinity,
           repeatType: 'mirror',
           ease: 'easeInOut'
@@ -58,34 +59,38 @@ export default function FloatingCursorBadge({
         className="relative flex flex-col items-start"
       >
         {/* Figma Cursor Arrow Pointer */}
-        <div className="relative -mb-1 z-10 filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+        <div className="relative -mb-1 z-10 filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
           <svg
             width="18"
             height="18"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="transform transition-transform duration-200 group-hover:scale-110"
+            className="transform transition-transform duration-200 group-hover:scale-115"
           >
             <path
               d="M3 3L10.07 21L13.59 13.59L21 10.07L3 3Z"
               fill={color}
               stroke="#050505"
-              strokeWidth="2"
+              strokeWidth="2.2"
               strokeLinejoin="round"
             />
           </svg>
         </div>
 
-        {/* Multiplayer Pill Label */}
+        {/* Multiplayer Pill Label with Icon */}
         <div
           style={{
             backgroundColor: color,
-            boxShadow: `0 4px 14px ${color}40, 0 2px 4px rgba(0,0,0,0.4)`
+            boxShadow: `0 4px 16px ${color}50, 0 2px 6px rgba(0,0,0,0.6)`
           }}
-          className="ml-3.5 px-2.5 py-0.5 rounded-full rounded-tl-sm flex items-center gap-1.5 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+          className="ml-3 px-2.5 py-0.5 rounded-full rounded-tl-sm flex items-center gap-1.5 transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 border border-black/15"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-black/40"></span>
+          {icon ? (
+            <span className="text-[10px] text-black shrink-0 font-bold">{icon}</span>
+          ) : (
+            <span className="w-1.5 h-1.5 rounded-full bg-black/40"></span>
+          )}
           <span className="font-mono-code font-bold text-[11px] tracking-tight text-black whitespace-nowrap">
             {name}
           </span>
