@@ -110,9 +110,20 @@ export default function Navbar() {
           </div>
 
           <a
+            href="/Praveen_MV_Resume.pdf"
+            download="Praveen_MV_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-white/5 hover:bg-[#FF4522]/15 text-[#F5F5F5] hover:text-[#FF4522] border border-white/10 hover:border-[#FF4522]/40 transition-all duration-200"
+          >
+            <span>Resume</span>
+            <ArrowUpRight className="w-3 h-3 text-[#FF4522]" />
+          </a>
+
+          <a
             href="#contact"
             onClick={(e) => scrollTo(e, '#contact')}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-white/5 hover:bg-[#FF4522]/15 text-[#F5F5F5] hover:text-[#FF4522] border border-white/10 hover:border-[#FF4522]/40 transition-all duration-200"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-[#FF4522]/15 hover:bg-[#FF4522] text-[#FF4522] hover:text-[#050505] border border-[#FF4522]/40 transition-all duration-200"
           >
             <span>Let's Talk</span>
             <ArrowUpRight className="w-3 h-3" />
@@ -144,6 +155,18 @@ export default function Navbar() {
               <ArrowUpRight className="w-4 h-4 opacity-40" />
             </a>
           ))}
+          <a
+            href="/Praveen_MV_Resume.pdf"
+            download="Praveen_MV_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl text-sm font-medium tracking-wider uppercase text-[#F5F5F5] bg-white/5 hover:bg-[#FF4522]/15 hover:text-[#FF4522] transition-colors flex items-center justify-between border border-white/5"
+          >
+            <span className="flex items-center gap-2">
+              <span>Resume (PDF)</span>
+            </span>
+            <ArrowUpRight className="w-4 h-4 text-[#FF4522]" />
+          </a>
           <div className="pt-2 mt-2 border-t border-white/10 flex items-center justify-between text-xs text-[#A1A1AA] px-2 font-mono-code">
             <span>BASED IN CHENNAI</span>
             <span className="text-[#FF4522]">OPEN TO FULL-TIME</span>

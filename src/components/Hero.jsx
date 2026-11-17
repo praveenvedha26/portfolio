@@ -174,8 +174,10 @@ export default function Hero({ onOpenContact }) {
 
               {/* Secondary sleek dark glass button */}
               <a
-                href="/resume.pdf"
-                download="Praveen_Vedanayagam_Resume.pdf"
+                href="/Praveen_MV_Resume.pdf"
+                download="Praveen_MV_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 bg-[#0D0D10]/80 backdrop-blur-md text-[#F5F5F5] font-anton tracking-wider text-base uppercase rounded-lg border border-white/15 hover:border-[#FF4522]/70 hover:bg-[#FF4522]/10 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,69,34,0.2)] active:scale-[0.98]"
               >
                 <span>DOWNLOAD RESUME</span>
