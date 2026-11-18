@@ -60,7 +60,7 @@ export default function EducationSection() {
                   Bachelor of Engineering in Electronics and Communication Engineering (B.E. ECE)
                 </h3>
                 <p className="mt-2 text-base sm:text-lg font-medium text-gradient-fiery">
-                  Thanthai Periyar Government Institute of Technology
+                  Dhanalakshmi Srinivasan Engineering College
                 </p>
               </div>
 

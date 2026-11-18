@@ -118,7 +118,7 @@ npm run preview
 ## 🎓 Academic Foundation
 
 - **Bachelor of Engineering in Electronics and Communication Engineering (B.E. ECE)**
-  - **Institution:** Thanthai Periyar Government Institute of Technology
+  - **Institution:** Dhanalakshmi Srinivasan Engineering College
   - **Class of:** 2026
 
 ---
